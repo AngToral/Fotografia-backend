@@ -2,10 +2,15 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
-
+const cors = require('cors')
 const port = 3000
 
 const { photoRouter } = require('./routes/entryRoutes')
+
+app.use(cors(corsOptions));
+var corsOptions = {
+    origin: '*',
+}
 
 const mongoose = require("mongoose")
 const mongoDB = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@" + process.env.DB_SERVER + "/" + process.env.DB_NAME + "?retryWrites=true&w=majority";

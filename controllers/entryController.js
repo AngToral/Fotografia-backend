@@ -45,7 +45,7 @@ const deletePhoto = async (req, res) => {
         if (photo) { return res.status(200).json({ msg: "Photo removed successfully" }) }
         else return res.status(404).json({ msg: "Photo not found" })
     } catch (error) {
-        res.status(403).json({ msg: "Forbidden" })
+        res.status(403).json({ msg: "Forbidden", error: error.message })
     }
 }
 
