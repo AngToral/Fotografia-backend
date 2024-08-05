@@ -41,7 +41,7 @@ const addPhoto = async (req, res) => {
 
 const deletePhoto = async (req, res) => {
     try {
-        const photo = await entryModel.findByIdAndUpdate(req.params.id, { removedAt: new Date() })
+        const photo = await entryModel.findByIdAndUpdate(req.params.id, { removedAt: new Date(), })
         if (photo) { return res.status(200).json({ msg: "Photo removed successfully" }) }
         else return res.status(404).json({ msg: "Photo not found" })
     } catch (error) {
