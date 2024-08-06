@@ -12,11 +12,9 @@ const userSchema = new Schema({
     },
     name: {
         type: String,
-        required: true,
     },
     lastname: {
         type: String,
-        required: true,
     },
     profilePic: {
         type: String,

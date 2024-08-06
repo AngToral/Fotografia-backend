@@ -24,9 +24,9 @@ const updateUser = async (req, res) => {
 }
 ç
 const addUser = async (req, res) => {
-    const hasehdPassword = await bcrypt.hash(req.body.password, 10) //encripto contraseña
+    const hashedPassword = await bcrypt.hash(req.body.password, 10) //encripto contraseña
     try {
-        const user = await userModel.create({email: req.body.email, password: hasehdPassword}) //creo usuario con contraseña encriptada
+        const user = await userModel.create({email: req.body.email, password: hashedPassword}) //creo usuario con contraseña encriptada
         if (user) { return res.status(201).json({ msg: "User created" }) }
         else return res.status(404).json({ msg: "User not found" })
     } catch (error) {
@@ -58,9 +58,21 @@ const login = async (req, res) => {
     }
 }
 
+const verifyToken = async (req, res, next) => { //middleware que verifica token activo
+    try {
+        const token = req.headers.authorization.split(' ')[1]; // nos quedamos con el token antes de Bearer
+        const decodedToken = jwt.verify(token, myTokenSecret)
+        req.user = decodedToken;
+        next()
+    } catch (error) {
+        res.status(403).json({msg: "You are not authenticated", error})
+    }
+}
+
 module.exports = {
     getUser,
     updateUser,
     addUser,
     login,
+    verifyToken,
 }
