@@ -7,6 +7,6 @@ photoRouter.get('/', getPhoto)
 photoRouter.get('/:id?', getPhotoId)
 photoRouter.put('/:id?', updatePhoto)
 photoRouter.post('/', addPhoto)
-photoRouter.delete('/id?', deletePhoto)
+photoRouter.delete('/:id?', deletePhoto)
 
 module.exports = { photoRouter }

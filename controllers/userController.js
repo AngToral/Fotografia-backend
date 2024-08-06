@@ -22,7 +22,7 @@ const updateUser = async (req, res) => {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
 }
-ç
+
 const addUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10) //encripto contraseña
     try {
