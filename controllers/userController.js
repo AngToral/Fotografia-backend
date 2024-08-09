@@ -89,11 +89,12 @@ const forgotPasswordEmail = async (req, res) => {
                 }
             });
             console.log("Email sent")
-            res.status(200).json({ msg: "Email sent" });
+            res.status(200).json(user);
         }
+        if (!user) res.status(404).json({ msg: "This email is not registered" })
     }
     catch {
-        res.status(404).json({ msg: "This email is not registered" })
+        res.status(500).json({ msg: "Error" })
     }
 }
 
