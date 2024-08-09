@@ -1,4 +1,4 @@
-module.exports = () => `
+module.exports = `
 
 <!DOCTYPE html>
 <html lang="es">

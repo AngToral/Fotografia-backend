@@ -2,6 +2,7 @@ const { userModel } = require("../models/user.model")
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const transporter = require('../transporter');
+const forgotEmail = require("../emails/forgotEmail");
 
 const myTokenSecret = process.env.MYTOKENSECRET //creo secreto de firma para token
 
@@ -78,8 +79,8 @@ const forgotPasswordEmail = async (req, res) => {
             const forgottenEmail = {
                 from: "avtoral94@gmail.com",
                 to: email,
-                subject: `PRUEBA DE ENVIO`,
-                text: "forgotEmail",
+                subject: "PRUEBA DE ENVIO",
+                html: forgotEmail,
             };
             transporter.sendMail(forgottenEmail, function (error, info) {
                 if (error) {
