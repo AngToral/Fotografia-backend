@@ -7,6 +7,6 @@ userRouter.get('/', getUser)
 userRouter.put('/:id?', updateUser)
 userRouter.post('/register', addUser)
 userRouter.post('/login', login)
-userRouter.put('/forgottenpassword', forgotPasswordEmail)
+userRouter.post('/forgottenpassword', forgotPasswordEmail)
 
 module.exports = { userRouter }

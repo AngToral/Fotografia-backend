@@ -82,13 +82,14 @@ const forgotPasswordEmail = async (req, res) => {
                 subject: `PRUEBA DE ENVIO`,
                 html: forgotEmail,
             };
-            transporter.sendMail(email, function (error, info) {
+            transporter.sendMail(forgottenEmail, function (error, info) {
                 if (error) {
                     console.log(error);
                 } else {
                     console.log("Email sent: " + info.response);
                 }
             });
+            console.log("Email sent")
             res.status(200).json({ msg: "Email sent" });
         }
     }
