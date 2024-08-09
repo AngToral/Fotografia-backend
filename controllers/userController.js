@@ -17,9 +17,15 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const user = await userModel.findByIdAndUpdate(req.params.id, { ...req.body })
-        if (user) { return res.status(200).json(user) }
-        else return res.status(404).json({ msg: "User not found" })
+        if (req.body.password) {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10) //si cambio contraseña, la encripto
+            const data = await userModel.findByIdAndUpdate(req.params.id, { ...req.body, password: hashedPassword })
+            res.status(200).json(data)
+        } else {
+            const user = await userModel.findByIdAndUpdate(req.params.id, { ...req.body })
+            if (user) { return res.status(200).json(user) }
+            else return res.status(404).json({ msg: "User not found" })
+        }
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
