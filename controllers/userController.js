@@ -76,12 +76,13 @@ const forgotPasswordEmail = async (req, res) => {
     const { email } = req.body
     try {
         const user = await userModel.findOne({ email: email })
+        const sendingEmail = forgotEmail(user._id)
         if (user) {
             const forgottenEmail = {
                 from: "avtoral94@gmail.com",
                 to: email,
                 subject: "Restablecer contraseña",
-                html: forgotEmail,
+                html: sendingEmail,
             };
             transporter.sendMail(forgottenEmail, function (error, info) {
                 if (error) {

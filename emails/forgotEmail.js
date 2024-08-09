@@ -1,4 +1,4 @@
-module.exports = `
+module.exports = (userId) => `
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -70,7 +70,7 @@ module.exports = `
         <div class="content">
             <h1>Have you forgotten your password?</h1>
             <p>Change it at the following link:</p>
-            <a class="btn" href="">New password!</a>
+            <a class="btn" href="http://localhost:5173/newpassword/${userId}">New password!</a>
         </div>
     </div>
 </body>
