@@ -1,7 +1,8 @@
 const { userModel } = require("../models/user.model")
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const transporter = require('../transporter')
+const transporter = require('../transporter');
+const forgotEmail = require("../emails/forgotEmail");
 
 const myTokenSecret = process.env.MYTOKENSECRET //creo secreto de firma para token
 
@@ -70,6 +71,31 @@ const verifyToken = async (req, res, next) => { //middleware que verifica token 
         res.status(403).json({ msg: "You are not authenticated", error })
     }
 }
+const forgotPasswordEmail = async (req, res) => {
+    const { email } = req.body
+    try {
+        const user = await userModel.findOne({ email: email })
+        if (user) {
+            const forgottenEmail = {
+                from: "avtoral94@gmail.com",
+                to: email,
+                subject: `PRUEBA DE ENVIO`,
+                html: forgotEmail,
+            };
+            transporter.sendMail(email, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log("Email sent: " + info.response);
+                }
+            });
+            res.status(200).json({ msg: "Email sent" });
+        }
+    }
+    catch {
+        res.status(404).json({ msg: "This email is not registered" })
+    }
+}
 
 module.exports = {
     getUser,
@@ -77,4 +103,5 @@ module.exports = {
     addUser,
     login,
     verifyToken,
+    forgotPasswordEmail,
 }
