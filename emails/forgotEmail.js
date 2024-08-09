@@ -1,5 +1,4 @@
 module.exports = `
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,18 +18,22 @@ module.exports = `
             width: 90%;
             max-width: 600px;
             margin: 20px auto;
-            background-color: #ffffff;
+            background-color: #F1F0E8;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .header img {
+        .image {
             height: 50px;
             margin: auto
         }
         .header {
             display: flex;
             justify-content: center;
+        }
+        .header img {
+            height: 200px;
+            margin: auto
         }
         .content {
             text-align: left;
@@ -49,7 +52,6 @@ module.exports = `
         .highlight-box strong {
             display: block;
             margin-bottom: 10px;
-
         }
         .btn {
             display: inline-block;
@@ -57,7 +59,7 @@ module.exports = `
             padding: 10px 20px;
             font-size: 16px;
             color: #fff !important;
-            background-color: #2cb990;
+            background-color: #96B6C5;
             text-decoration: none;
             border-radius: 5px;
         }
@@ -65,25 +67,10 @@ module.exports = `
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="https://tfm-amarillo-frontend.netlify.app/BudgetWiseNS.png" alt="BudgetWise Logo">
-        </div>
         <div class="content">
-            <h1>¡Gracias por registrarte en BudgetWise!</h1>
-            <p>Estamos encantados de darte la bienvenida a nuestra aplicación. BudgetWise es la herramienta perfecta para gestionar tus finanzas de manera eficiente y sencilla. Con BudgetWise, podrás:</p>
-            <ul>
-                <li>Controlar tus gastos e ingresos</li>
-                <li>Analizar tu historial financiero con gráficos y reportes detallados</li>
-            </ul>
-            <div class="highlight-box">
-                <p class="highlight-text"><strong>Para iniciar sesión, utiliza los siguientes datos:</strong></p>
-                <p><strong>Usuario:</strong> Prueba </p>
-                <p><strong>Contraseña:</strong>Hola</p>
-            </div>
-            <p><strong>Haz click aquí para activar tu cuenta:</strong></p>
-            <a class="btn" href="">¡Activar Cuenta!</a>
-
-            <p>No olvides acceder a tu perfil y cambiar tu contraseña por una más segura.</p>
+            <h1>Have you forgotten your password?</h1>
+            <p>Change it at the following link:</p>
+            <a class="btn" href="">New password!</a>
         </div>
     </div>
 </body>
