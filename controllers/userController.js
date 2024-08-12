@@ -32,10 +32,10 @@ const updateUser = async (req, res) => {
 }
 
 const addUser = async (req, res) => {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10) //encripto contraseña
     try {
-        const user = await userModel.create({ email: req.body.email, password: hashedPassword }) //creo usuario con contraseña encriptada
-        if (user) { return res.status(201).json({ msg: "User created" }) }
+        const hashedPassword = await bcrypt.hash(req.body.password, 10) //encripto contraseña
+        const user = await userModel.create({ ...req.body, password: hashedPassword }) //creo usuario con contraseña encriptada
+        if (user) { return res.status(201).json(user) }
         else return res.status(404).json({ msg: "User not found" })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
