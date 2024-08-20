@@ -1,5 +1,5 @@
 const { photoModel } = require("../models/photo.model")
-
+const fs = require("node:fs");
 
 const getPhoto = async (req, res) => {
     try {
@@ -32,11 +32,17 @@ const updatePhoto = async (req, res) => {
 
 const addPhoto = async (req, res) => {
     try {
+        saveImage(req.file)
         const photo = await photoModel.create({ ...req.body })
         res.status(201).json({ msg: "Photo created", id: photo._id })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
+}
+
+function saveImage(file) {
+    const newPath = `./images-gallery/${file.originalname}`
+    fs.renameSync(file.path, newPath)
 }
 
 const deletePhoto = async (req, res) => {
