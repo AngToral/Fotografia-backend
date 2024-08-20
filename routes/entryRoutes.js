@@ -1,12 +1,12 @@
 const express = require("express");
-const { getPhoto, getPhotoId, updatePhoto, addPhoto, deletePhoto } = require("../controllers/entryController");
+const { getEntry, getEntryId, updateEntry, addEntry, deleteEntry } = require("../controllers/entryController");
 
-const photoRouter = express.Router();
+const entryRouter = express.Router();
 
-photoRouter.get('/', getPhoto)
-photoRouter.get('/:id?', getPhotoId)
-photoRouter.put('/:id?', updatePhoto)
-photoRouter.post('/', addPhoto)
-photoRouter.delete('/:id?', deletePhoto)
+entryRouter.get('/', getEntry)
+entryRouter.get('/:id?', getEntryId)
+entryRouter.put('/:id?', updateEntry)
+entryRouter.post('/', addEntry)
+entryRouter.delete('/:id?', deleteEntry)
 
-module.exports = { photoRouter }
+module.exports = { entryRouter }

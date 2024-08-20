@@ -1,18 +1,18 @@
-const { entryModel } = require("../models/entry.model")
+const { photoModel } = require("../models/photo.model")
 
 
-const getEntry = async (req, res) => {
+const getPhoto = async (req, res) => {
     try {
-        const photos = await entryModel.find({ removedAt: { $eq: null } })
+        const photos = await photoModel.find({ removedAt: { $eq: null } })
         res.status(200).json(photos)
     } catch (error) {
         res.status(500).json({ msg: "Error getting photos", error: error.message })
     }
 }
 
-const getEntryId = async (req, res) => {
+const getPhotoId = async (req, res) => {
     try {
-        const photo = await entryModel.findById(req.params.id)
+        const photo = await photoModel.findById(req.params.id)
         if (photo) { return res.status(200).json(photo) }
         else return res.status(404).json({ msg: "Photo not found" })
     } catch (error) {
@@ -20,9 +20,9 @@ const getEntryId = async (req, res) => {
     }
 }
 
-const updateEntry = async (req, res) => {
+const updatePhoto = async (req, res) => {
     try {
-        const photo = await entryModel.findByIdAndUpdate(req.params.id, { ...req.body })
+        const photo = await photoModel.findByIdAndUpdate(req.params.id, { ...req.body })
         if (photo) { return res.status(200).json({ msg: "Photo updated" }) }
         else return res.status(404).json({ msg: "Photo not found" })
     } catch (error) {
@@ -30,18 +30,18 @@ const updateEntry = async (req, res) => {
     }
 }
 
-const addEntry = async (req, res) => {
+const addPhoto = async (req, res) => {
     try {
-        const photo = await entryModel.create({ ...req.body })
+        const photo = await photoModel.create({ ...req.body })
         res.status(201).json({ msg: "Photo created", id: photo._id })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
 }
 
-const deleteEntry = async (req, res) => {
+const deletePhoto = async (req, res) => {
     try {
-        const photo = await entryModel.findByIdAndUpdate(req.params.id, { removedAt: new Date(), })
+        const photo = await photoModel.findByIdAndUpdate(req.params.id, { removedAt: new Date(), })
         if (photo) { return res.status(200).json({ msg: "Photo removed successfully" }) }
         else return res.status(404).json({ msg: "Photo not found" })
     } catch (error) {
@@ -50,9 +50,9 @@ const deleteEntry = async (req, res) => {
 }
 
 module.exports = {
-    getEntry,
-    getEntryId,
-    updateEntry,
-    addEntry,
-    deleteEntry,
+    getPhoto,
+    getPhotoId,
+    updatePhoto,
+    addPhoto,
+    deletePhoto,
 }
