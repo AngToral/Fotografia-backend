@@ -10,7 +10,7 @@ const photoSchema = new Schema({
         type: String,
         //required: true,
     },
-    photo: {
+    imageGallery: {
         type: String,
         //required: true,
     },
