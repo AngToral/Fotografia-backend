@@ -4,10 +4,12 @@ const Schema = mongoose.Schema;
 const photoSchema = new Schema({
     theme1: {
         type: String,
+        enum: ["Deporte", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Animal"],
         //required: true,
     },
     theme2: {
         type: String,
+        enum: ["Deporte", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Animal"],
         //required: true,
     },
     imageGallery: {
