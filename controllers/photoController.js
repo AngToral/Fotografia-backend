@@ -53,24 +53,25 @@ function saveImage(file) {
 }
 
 const addImage = async (req, res) => {
-    if (!req.file) {
-        return res.status(400).send("There are no files attached");
-    }
-    cloudinary.uploader.upload(req.file.path, async (result, error) => {
-        try {
-            if (error) {
-                return res.status(500).send(error);
-            }
-            saveImage(req.file)
-            const urlToUpdate = { imageGallery: result.url };
-            const data = await photoModel.findByIdAndUpdate(req.params.id, {
-                ...urlToUpdate,
-            });
-            res.status(200).json({ msg: "Photo uploaded", url: result.url });
-        } catch (error) {
-            res.status(400).json({ msg: "You missed some parameter", error: error.message })
+    try {
+        if (!req.file) {
+            return res.status(400).send("There are no files attached");
         }
-    })
+
+        const name = Date.now()
+
+        const result = await cloudinary.uploader.upload(req.file.path)
+        fs.unlinkSync(req.file.path);
+        console.log(result)
+
+        const urlToUpdate = { imageGallery: result.url };
+        const data = await photoModel.findByIdAndUpdate(req.params.id, {
+            ...urlToUpdate,
+        });
+        res.status(200).json({ msg: "Photo uploaded", url: result.url });
+    } catch (error) {
+        res.status(400).json({ msg: "You missed some parameter", error: error.message })
+    }
 }
 
 const deletePhoto = async (req, res) => {
