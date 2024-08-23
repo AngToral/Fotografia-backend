@@ -5,20 +5,19 @@ const photoSchema = new Schema({
     theme1: {
         type: String,
         enum: ["Deportes", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Animal", "Pareja"],
-        //required: true,
+        required: true,
     },
     theme2: {
         type: String,
-        enum: ["Deportes", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Animal", "Pareja"],
-        //required: true,
+        enum: ["undefined", "Deportes", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Animal", "Pareja"],
     },
     imageGallery: {
         type: String,
-        //required: true,
+        required: true,
     },
     photoDate: {
         type: Date,
-        //required: true,
+        required: true,
     },
     removedAt: Date
 },
