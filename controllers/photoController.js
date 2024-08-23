@@ -39,35 +39,13 @@ const updatePhoto = async (req, res) => {
 
 const addPhoto = async (req, res) => {
     try {
-        const photo = await photoModel.create({ ...req.body })
-        console.log(photo)
-        res.status(201).json({ msg: "Photo created", id: photo._id })
-    } catch (error) {
-        res.status(400).json({ msg: "You missed some parameter", error: error.message })
-    }
-}
-
-function saveImage(file) {
-    const newPath = `./images-gallery/${Date.now()}`
-    fs.renameSync(file.path, newPath)
-}
-
-const addImage = async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).send("There are no files attached");
-        }
-
+        const { theme1, theme2, photoDate } = req.body
         const result = await cloudinary.uploader.upload(req.file.path)
         fs.unlinkSync(req.file.path);
         console.log("result", result)
-
-        const urlToUpdate = { imageGallery: result.url };
-        const data = await photoModel.findByIdAndUpdate(req.params.id, {
-            ...urlToUpdate,
-        });
-        console.log("data", data)
-        res.status(200).json({ msg: "Photo uploaded", url: result.url });
+        const photo = await photoModel.create({ theme1, theme2, photoDate, imageGallery: result.url })
+        console.log(photo)
+        res.status(201).json({ msg: "Photo created", id: photo._id })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
@@ -89,5 +67,4 @@ module.exports = {
     updatePhoto,
     addPhoto,
     deletePhoto,
-    addImage
 }

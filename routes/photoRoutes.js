@@ -8,8 +8,7 @@ const galleryUpload = multer({ dest: './images-gallery' })
 photoRouter.get('/', getPhoto)
 photoRouter.get('/:id?', getPhotoId)
 photoRouter.put('/:id?', updatePhoto)
-photoRouter.post('/', addPhoto)
-photoRouter.post('/upload/:id?', galleryUpload.single('imageGallery'), addImage)
+photoRouter.post('/', galleryUpload.single('imageGallery'), addPhoto)
 photoRouter.delete('/:id?', deletePhoto)
 
 module.exports = { photoRouter }
