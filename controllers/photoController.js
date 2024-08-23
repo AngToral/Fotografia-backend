@@ -35,7 +35,7 @@ const updatePhoto = async (req, res) => {
             fs.unlinkSync(req.file.path);
             updateData.imageGallery = result.url;
         }
-        const photo = await photoModel.findByIdAndUpdate(req.params.id, { ...req.body })
+        const photo = await photoModel.findByIdAndUpdate(req.params.id, updateData)
         if (photo) { return res.status(200).json({ msg: "Photo updated" }) }
         else return res.status(404).json({ msg: "Photo not found" })
     } catch (error) {
