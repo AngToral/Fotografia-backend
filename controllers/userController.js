@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const transporter = require('../transporter');
 const forgotEmail = require("../emails/forgotEmail");
+const contactEmail = require("../emails/contactEmail");
 
 const myTokenSecret = process.env.MYTOKENSECRET //creo secreto de firma para token
 
@@ -106,6 +107,32 @@ const forgotPasswordEmail = async (req, res) => {
     }
 }
 
+const sendContactEmail = async (req, res) => {
+    const { clientName, clientEmail, subject } = req.body
+    try {
+        const sendingEmail = contactEmail(clientName, clientEmail, subject)
+
+        const forgottenEmail = {
+            from: "blablagmail.com",
+            to: "avtoral94@gmail.com",
+            subject: "New client contact! 🎉 ",
+            html: sendingEmail,
+        };
+        transporter.sendMail(forgottenEmail, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
+        console.log("Email sent")
+        res.status(200).json("Ok");
+    }
+    catch {
+        res.status(500).json({ msg: "Error" })
+    }
+}
+
 module.exports = {
     getUser,
     updateUser,
@@ -113,4 +140,5 @@ module.exports = {
     login,
     verifyToken,
     forgotPasswordEmail,
+    sendContactEmail
 }
