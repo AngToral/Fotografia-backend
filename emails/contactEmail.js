@@ -69,10 +69,10 @@ module.exports = (clientName, clientEmail, subject) => `
     <div class="container">
         <div class="content">
             <h1>Someone want's to talk to you, Mariana!</h1>
-            <p>Cliente info:</p>
-            <p>Name: ${clientName}</p>
-            <p>Email: ${clientEmail}</p>
-            <p>Subject: ${subject}</p>
+            <h3>Client info:</h3>
+            <p><strong>Name: </strong>${clientName}</p>
+            <p><strong>Email: </strong>${clientEmail}</p>
+            <p><strong>Subject: </strong>${subject}</p>
         </div>
     </div>
 </body>
