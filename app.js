@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000
 const { entryRouter } = require('./routes/entryRoutes')
 const { userRouter } = require('./routes/userRoutes')
 const { photoRouter } = require('./routes/photoRoutes')
+const { testimonialsRouter } = require('./routes/testimonialsRoutes')
 
 const mongoose = require("mongoose")
 const mongoDB = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@" + process.env.DB_SERVER + "/" + process.env.DB_NAME + "?retryWrites=true&w=majority";
@@ -22,6 +23,7 @@ app.use(express.json())
 app.use('/blog', entryRouter)
 app.use('/user', userRouter)
 app.use('/gallery', photoRouter)
+app.use('/testimonials', testimonialsRouter)
 
 const server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
