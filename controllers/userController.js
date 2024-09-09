@@ -87,7 +87,7 @@ const forgotPasswordEmail = async (req, res) => {
             const forgottenEmail = {
                 from: "angtoral.dev@gmail.com",
                 to: email,
-                subject: "Restablecer contraseña",
+                subject: "Reset password 🔑",
                 html: sendingEmail,
             };
             transporter.sendMail(forgottenEmail, function (error, info) {
