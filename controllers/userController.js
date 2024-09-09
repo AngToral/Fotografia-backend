@@ -85,7 +85,7 @@ const forgotPasswordEmail = async (req, res) => {
         const sendingEmail = forgotEmail(user._id)
         if (user) {
             const forgottenEmail = {
-                from: "avtoral94@gmail.com",
+                from: "angtoral.dev@gmail.com",
                 to: email,
                 subject: "Restablecer contraseña",
                 html: sendingEmail,
@@ -113,8 +113,8 @@ const sendContactEmail = async (req, res) => {
         const sendingEmail = contactEmail(clientName, clientEmail, subject)
 
         const forgottenEmail = {
-            from: "blablagmail.com",
-            to: "avtoral94@gmail.com",
+            from: "angtoral.dev@gmail.com",
+            to: "avtoral94@gmail.com", //cambiar al de mariana
             subject: "New client contact! 🎉 ",
             html: sendingEmail,
         };
