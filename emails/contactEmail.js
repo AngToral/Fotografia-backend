@@ -4,11 +4,11 @@ module.exports = (clientName, clientEmail, subject) => `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a BudgetWise</title>
+    <title>New client contact</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #000000;
             color: #333;
             margin: 0;
             padding: 0;

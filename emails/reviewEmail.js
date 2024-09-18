@@ -1,10 +1,10 @@
-module.exports = (userId) => `
+module.exports = (clientName, clientEmail, shootDate, testimonial) => `
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset password</title>
+    <title>New client review</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -68,9 +68,13 @@ module.exports = (userId) => `
 <body>
     <div class="container">
         <div class="content">
-            <h1>Have you forgotten your password?</h1>
-            <p>Change it at the following link:</p>
-            <a class="btn" href="http://localhost:5173/newpassword/${userId}">New password!</a>
+            <h1>Someone has written you a review, Mariana!</h1>
+            <h3>Check it out:</h3>
+            <p><strong>Name: </strong>${clientName}</p>
+            <p><strong>Email: </strong>${clientEmail}</p>
+            <p><strong>Shooting date: </strong>${shootDate}</p>
+            <p><strong>Review: </strong>${testimonial}</p>
+            <p><strong>boton de eliminar: </strong></p>
         </div>
     </div>
 </body>
