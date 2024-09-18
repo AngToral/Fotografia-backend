@@ -1,4 +1,4 @@
-module.exports = (clientName, clientEmail, shootDate, testimonial) => `
+module.exports = (clientName, clientEmail, shootDate, testimonial, opinionId) => `
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -74,7 +74,7 @@ module.exports = (clientName, clientEmail, shootDate, testimonial) => `
             <p><strong>Email: </strong>${clientEmail}</p>
             <p><strong>Shooting date: </strong>${shootDate}</p>
             <p><strong>Review: </strong>${testimonial}</p>
-            <p><strong>boton de eliminar: </strong></p>
+            <a class="btn" href="http://localhost:5173/deletetestimonials/${opinionId}"><strong>Eliminar opinión</strong></a>
         </div>
     </div>
 </body>

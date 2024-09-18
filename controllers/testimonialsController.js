@@ -35,7 +35,7 @@ const addOpinion = async (req, res) => {
     const { clientName, clientEmail, shootDate, testimonial } = req.body
     try {
         const opinion = await opinionModel.create({ ...req.body })
-        const sendingEmail = reviewEmail(clientName, clientEmail, shootDate, testimonial)
+        const sendingEmail = reviewEmail(clientName, clientEmail, shootDate, testimonial, opinion._id)
         const opinionEmail = {
             from: "angtoral.dev@gmail.com",
             to: "avtoral94@gmail.com", //cambiar al de mariana
