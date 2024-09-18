@@ -1,5 +1,6 @@
+const reviewEmail = require("../emails/reviewEmail")
 const { opinionModel } = require("../models/testimonials.model")
-
+const transporter = require('../transporter');
 
 const getOpinion = async (req, res) => {
     try {
@@ -31,9 +32,24 @@ const updateOpinion = async (req, res) => {
 }
 
 const addOpinion = async (req, res) => {
+    const { clientName, clientEmail, shootDate, testimonial } = req.body
     try {
         const opinion = await opinionModel.create({ ...req.body })
-        res.status(201).json({ msg: "Opinion created", id: opinion._id })
+        const sendingEmail = reviewEmail(clientName, clientEmail, shootDate, testimonial)
+        const opinionEmail = {
+            from: "angtoral.dev@gmail.com",
+            to: "avtoral94@gmail.com", //cambiar al de mariana
+            subject: "New client review! 🔥",
+            html: sendingEmail,
+        };
+        transporter.sendMail(opinionEmail, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
+        res.status(201).json({ msg: "Opinion created, email, sent", id: opinion._id })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
