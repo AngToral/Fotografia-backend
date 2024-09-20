@@ -49,7 +49,7 @@ const addOpinion = async (req, res) => {
                 console.log("Email sent: " + info.response);
             }
         });
-        res.status(201).json({ msg: "Opinion created, email, sent", id: opinion._id })
+        res.status(201).json(opinion)
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
@@ -58,7 +58,7 @@ const addOpinion = async (req, res) => {
 const deleteOpinion = async (req, res) => {
     try {
         const opinion = await opinionModel.findByIdAndUpdate(req.params.id, { removedAt: new Date(), })
-        if (opinion) { return res.status(200).json({ msg: "Opinion removed successfully" }) }
+        if (opinion) { return res.status(200).json(opinion) }
         else return res.status(404).json({ msg: "Opinion not found" })
     } catch (error) {
         res.status(403).json({ msg: "Forbidden", error: error.message })

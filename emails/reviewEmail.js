@@ -74,7 +74,7 @@ module.exports = (clientName, clientEmail, shootDate, testimonial, opinionId) =>
             <p><strong>Email: </strong>${clientEmail}</p>
             <p><strong>Shooting date: </strong>${shootDate}</p>
             <p><strong>Review: </strong>${testimonial}</p>
-            <a class="btn" href="http://localhost:5173/deletetestimonials/${opinionId}"><strong>Eliminar opinión</strong></a>
+            <a class="btn" href="http://localhost:5173/deletetestimonials/${opinionId}"><strong>Delete review</strong></a>
         </div>
     </div>
 </body>
