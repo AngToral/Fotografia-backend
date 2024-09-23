@@ -24,8 +24,7 @@ module.exports = (clientName, clientEmail, subject) => `
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .image {
-            height: 50px;
-            margin: auto
+            height: 250px;
         }
         .header {
             display: flex;
@@ -63,12 +62,19 @@ module.exports = (clientName, clientEmail, subject) => `
             text-decoration: none;
             border-radius: 5px;
         }
+        .container-image {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="content">
-            <h1>Someone want's to talk to you, Mariana!</h1>
+            <div class="container-image">
+                <img src="https://res.cloudinary.com/digngdp2b/image/upload/v1726859712/firma-rosa_spro3p.png" class="image" />
+            </div>
+            <h1>Someone want's to talk to you, Mariana! 🔥</h1>
             <h3>Client info:</h3>
             <p><strong>Name: </strong>${clientName}</p>
             <p><strong>Email: </strong>${clientEmail}</p>

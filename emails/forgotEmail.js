@@ -24,8 +24,7 @@ module.exports = (userId) => `
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .image {
-            height: 50px;
-            margin: auto
+            height: 250px;
         }
         .header {
             display: flex;
@@ -54,7 +53,8 @@ module.exports = (userId) => `
             margin-bottom: 10px;
         }
         .btn {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
             margin: 20px 0;
             padding: 10px 20px;
             font-size: 16px;
@@ -63,12 +63,20 @@ module.exports = (userId) => `
             text-decoration: none;
             border-radius: 5px;
         }
+        .container-image {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="content">
-            <h1>Have you forgotten your password?</h1>
+            <div class="container-image">
+                <img src="https://res.cloudinary.com/digngdp2b/image/upload/v1726859712/firma-rosa_spro3p.png" class="image" />
+            </div>
+            <img src="https://res.cloudinary.com/digngdp2b/image/upload/v1726859649/firma-marron-oscuro_lhivff.png" class="image" />
+            <h1>Have you forgotten your password? 🔐</h1>
             <p>Change it at the following link:</p>
             <a class="btn" href="http://localhost:5173/newpassword/${userId}">New password!</a>
         </div>

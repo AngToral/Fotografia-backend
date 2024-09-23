@@ -24,8 +24,7 @@ module.exports = (clientName, clientEmail, shootDate, testimonial, opinionId) =>
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .image {
-            height: 50px;
-            margin: auto
+            height: 250px;
         }
         .header {
             display: flex;
@@ -63,12 +62,16 @@ module.exports = (clientName, clientEmail, shootDate, testimonial, opinionId) =>
             text-decoration: none;
             border-radius: 5px;
         }
+        .container-image {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="content">
-            <h1>Someone has written you a review, Mariana!</h1>
+            <h1>Someone has written you a review, Mariana! 🎉</h1>
             <h3>Check it out:</h3>
             <p><strong>Name: </strong>${clientName}</p>
             <p><strong>Email: </strong>${clientEmail}</p>
