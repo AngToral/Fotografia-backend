@@ -16,7 +16,7 @@ module.exports = (clientName, clientEmail, subject) => `
         }
         .container {
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             margin: 20px auto;
             background-color: #F1F0E8;
             padding: 20px;

@@ -16,7 +16,7 @@ module.exports = (clientName, clientEmail, shootDate, testimonial, opinionId) =>
         }
         .container {
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             margin: 20px auto;
             background-color: #F1F0E8;
             padding: 20px;
@@ -71,6 +71,7 @@ module.exports = (clientName, clientEmail, shootDate, testimonial, opinionId) =>
 <body>
     <div class="container">
         <div class="content">
+            <img src="https://res.cloudinary.com/digngdp2b/image/upload/v1726859712/firma-rosa_spro3p.png" class="image" />
             <h1>Someone has written you a review, Mariana! 🎉</h1>
             <h3>Check it out:</h3>
             <p><strong>Name: </strong>${clientName}</p>
