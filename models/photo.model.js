@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const photoSchema = new Schema({
     theme1: {
         type: String,
-        enum: ["Deportes", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Animal", "Pareja"],
+        enum: ["Deportes", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Pareja", "Animal", "Mascota"],
         required: true,
     },
     theme2: {
         type: String,
-        enum: ["undefined", "Deportes", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Animal", "Pareja"],
+        enum: ["Deportes", "Retrato", "Fotoperiodismo", "Escenario", "Evento", "Paisaje", "Mujer", "Hombre", "Pareja", "Animal", "Mascota", "undefined"],
     },
     imageGallery: {
         type: String,
