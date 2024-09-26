@@ -1,5 +1,5 @@
 const express = require("express");
-const { getPhoto, getPhotoId, updatePhoto, addPhoto, deletePhoto, addImage } = require("../controllers/photoController");
+const { getPhoto, getPhotoId, updatePhoto, addPhoto, deletePhoto } = require("../controllers/photoController");
 const multer = require('multer');
 
 const photoRouter = express.Router();

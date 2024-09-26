@@ -1,7 +1,6 @@
 const express = require("express");
 const { getEntry, getEntryId, updateEntry, addEntry, deleteEntry } = require("../controllers/entryController");
 const multer = require('multer');
-const fs = require("node:fs");
 
 const entryRouter = express.Router();
 const blogUpload = multer({ dest: './images-blog' })

@@ -42,7 +42,7 @@ const addEntry = async (req, res) => {
         const { text, photoDate } = req.body
         const result = await cloudinary.uploader.upload(req.file.path)
         fs.unlinkSync(req.file.path);
-        const photo = await entryModel.create({ text, photoDate, photo: result.url })
+        const photo = await entryModel.create({ text, photoDate, imageBlog: result.url })
         res.status(201).json({ msg: "Photo created", id: photo._id })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })

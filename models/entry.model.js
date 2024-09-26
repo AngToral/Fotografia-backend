@@ -6,7 +6,7 @@ const entrySchema = new Schema({
         type: String,
         //required: true,
     },
-    photo: {
+    imageBlog: {
         type: String,
         //required: true,
     },
