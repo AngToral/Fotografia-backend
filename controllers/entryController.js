@@ -1,5 +1,12 @@
 const { entryModel } = require("../models/entry.model")
+const fs = require("node:fs");
+const cloudinary = require("cloudinary");
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const getEntry = async (req, res) => {
     try {
@@ -32,7 +39,10 @@ const updateEntry = async (req, res) => {
 
 const addEntry = async (req, res) => {
     try {
-        const photo = await entryModel.create({ ...req.body })
+        const { text, photoDate } = req.body
+        const result = await cloudinary.uploader.upload(req.file.path)
+        fs.unlinkSync(req.file.path);
+        const photo = await entryModel.create({ text, photoDate, photo: result.url })
         res.status(201).json({ msg: "Photo created", id: photo._id })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
