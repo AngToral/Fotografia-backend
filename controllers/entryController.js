@@ -29,7 +29,13 @@ const getEntryId = async (req, res) => {
 
 const updateEntry = async (req, res) => {
     try {
-        const photo = await entryModel.findByIdAndUpdate(req.params.id, { ...req.body })
+        const updateData = req.body;
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path);
+            fs.unlinkSync(req.file.path);
+            updateData.imageBlog = result.url;
+        }
+        const photo = await entryModel.findByIdAndUpdate(req.params.id, updateData)
         if (photo) { return res.status(200).json({ msg: "Photo updated" }) }
         else return res.status(404).json({ msg: "Photo not found" })
     } catch (error) {
