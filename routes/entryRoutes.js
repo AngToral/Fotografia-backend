@@ -7,7 +7,7 @@ const blogUpload = multer({ dest: './images-blog' })
 
 entryRouter.get('/', getEntry)
 entryRouter.get('/:id?', getEntryId)
-entryRouter.put('/:id?', updateEntry)
+entryRouter.put('/:id?', blogUpload.single('imageBlog'), updateEntry)
 entryRouter.post('/', blogUpload.single('imageBlog'), addEntry)
 entryRouter.delete('/:id?', deleteEntry)
 
