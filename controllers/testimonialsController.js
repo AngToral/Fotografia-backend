@@ -1,4 +1,6 @@
-const reviewEmail = require("../emails/reviewEmail")
+const reviewEmail = require("../emails/reviewEmail");
+const sendReseñaEmail = require("../emails/sendReseñaEmail");
+const sendReviewEmail = require("../emails/sendReviewEmail");
 const { opinionModel } = require("../models/testimonials.model")
 const transporter = require('../transporter');
 
@@ -65,10 +67,64 @@ const deleteOpinion = async (req, res) => {
     }
 }
 
+const sendReviewRequest = async (req, res) => {
+    const { clientEmail, clientName } = req.body
+    try {
+        const sendingEmail = sendReviewEmail(clientName)
+
+        const reviewEmail = {
+            from: "angtoral.dev@gmail.com",
+            to: clientEmail,
+            subject: "Hello, there! 😊",
+            html: sendingEmail,
+        };
+        transporter.sendMail(reviewEmail, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
+        console.log("Email sent")
+        res.status(200).json("Ok");
+    }
+    catch {
+        res.status(500).json({ msg: "Error" })
+    }
+}
+
+const sendReseñaPeticion = async (req, res) => {
+    const { clienteEmail, clienteNombre } = req.body
+    try {
+        const sendingEmail = sendReseñaEmail(clienteNombre)
+
+        const reviewEmail = {
+            from: "angtoral.dev@gmail.com",
+            to: clienteEmail,
+            subject: "¡Hola, hola! 😊",
+            html: sendingEmail,
+        };
+        transporter.sendMail(reviewEmail, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
+        console.log("Email sent")
+        res.status(200).json("Ok");
+    }
+    catch {
+        res.status(500).json({ msg: "Error" })
+    }
+}
+
 module.exports = {
     getOpinion,
     getOpinionId,
     updateOpinion,
     addOpinion,
     deleteOpinion,
+    sendReviewRequest,
+    sendReseñaPeticion
 }
