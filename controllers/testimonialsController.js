@@ -115,7 +115,7 @@ const sendReseñaPeticion = async (req, res) => {
         res.status(200).json("Ok");
     }
     catch {
-        res.status(500).json({ msg: "Error" })
+        res.status(403).json({ msg: "Error, forbidden" })
     }
 }
 
