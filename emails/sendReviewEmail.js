@@ -1,10 +1,10 @@
-module.exports = (clientName, clientEmail) => `
+module.exports = (clientName) => `
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review request</title>
+    <title>Revview request</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,17 +71,20 @@ module.exports = (clientName, clientEmail) => `
 <body>
     <div class="container">
         <div class="content">
+            <h1>Dear ${clientName}!</h1>
+            <h3>We’d love to hear your thoughts on your recent photo session!</h3>
+            <p>I hope this email finds you well. I wanted to thank you again for choosing our services for your recent photo session. It was truly a pleasure working with you and capturing those special moments.</p>
+            <p>We highly value your feedback and would love to know if the experience met your expectations. If you have a few minutes, we would greatly appreciate it if you could leave a short review of your experience. Your feedback not only helps us improve but also assists other potential clients in making their decisions.</p>
+            <p>You can leave your review by clicking the following link:</p>
+            <a class="btn" href="http://localhost:5173/createtestimonials">New review</a>
+            <p>Thank you in advance for your time and comments. If you have any questions or need anything else from us, please don’t hesitate to reach out.</p>
+            <p>We look forward to working with you again in the future!</p>
+            <p>Best regards,</p>
             <img src="https://res.cloudinary.com/digngdp2b/image/upload/v1726859712/firma-rosa_spro3p.png" class="image" />
-            <h1>Someone has written you a review, Mariana! 🎉</h1>
-            <h3>Check it out:</h3>
-            <p><strong>Name: </strong>${clientName}</p>
-            <p><strong>Email: </strong>${clientEmail}</p>
-            <p><strong>Shooting date: </strong>${shootDate}</p>
-            <p><strong>Review: </strong>${testimonial}</p>
-            <a class="btn" href="http://localhost:5173/deletetestimonials/${opinionId}"><strong>Delete review</strong></a>
         </div>
     </div>
 </body>
 </html>
 
 `
+
