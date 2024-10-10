@@ -4,7 +4,7 @@ const { getUser, updateUser, login, addUser, forgotPasswordEmail, sendContactEma
 const userRouter = express.Router();
 
 userRouter.get('/:id?', getUser)
-userRouter.put('/:id?', verifyToken, updateUser)
+userRouter.put('/:id?', updateUser)
 userRouter.post('/register', addUser)
 userRouter.post('/login', login)
 userRouter.post('/forgottenpassword', forgotPasswordEmail)
