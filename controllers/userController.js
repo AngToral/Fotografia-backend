@@ -146,7 +146,7 @@ const sendChangePassword = async (req, res) => {
             const newEmail = {
                 from: "angtoral.dev@gmail.com",
                 to: email,
-                subject: "Change password 🔑",
+                subject: "Change your password 🔑",
                 html: sendingEmail,
             };
             transporter.sendMail(newEmail, function (error, info) {
@@ -175,7 +175,7 @@ const sendChangeEmail = async (req, res) => {
             const newEmail = {
                 from: "angtoral.dev@gmail.com",
                 to: email,
-                subject: "Change Email 🔑",
+                subject: "Change your Email 🔑",
                 html: sendingEmail,
             };
             transporter.sendMail(newEmail, function (error, info) {
