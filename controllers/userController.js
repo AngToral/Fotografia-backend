@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const transporter = require('../transporter');
 const forgotEmail = require("../emails/forgotEmail");
 const contactEmail = require("../emails/contactEmail");
+const changePassword = require("../emails/changePassword");
+const changeEmail = require("../emails/changeEmail");
 
 const myTokenSecret = process.env.MYTOKENSECRET //creo secreto de firma para token
 
@@ -79,6 +81,7 @@ const verifyToken = async (req, res, next) => { //middleware que verifica token 
         res.status(403).json({ msg: "You are not authenticated", error })
     }
 }
+
 const forgotPasswordEmail = async (req, res) => {
     const { email } = req.body
     try {
@@ -134,6 +137,64 @@ const sendContactEmail = async (req, res) => {
     }
 }
 
+const sendChangePassword = async (req, res) => {
+    const { email } = req.body
+    try {
+        const user = await userModel.findOne({ email: email })
+        const sendingEmail = changePassword(user._id)
+        if (user) {
+            const newEmail = {
+                from: "angtoral.dev@gmail.com",
+                to: email,
+                subject: "Change password 🔑",
+                html: sendingEmail,
+            };
+            transporter.sendMail(newEmail, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log("Email sent: " + info.response);
+                }
+            });
+            console.log("Email sent")
+            res.status(200).json(user);
+        }
+        if (!user) res.status(404).json({ msg: "This email is not registered" })
+    }
+    catch {
+        res.status(500).json({ msg: "Error" })
+    }
+}
+
+const sendChangeEmail = async (req, res) => {
+    const { email } = req.body
+    try {
+        const user = await userModel.findOne({ email: email })
+        const sendingEmail = changeEmail(user._id)
+        if (user) {
+            const newEmail = {
+                from: "angtoral.dev@gmail.com",
+                to: email,
+                subject: "Change Email 🔑",
+                html: sendingEmail,
+            };
+            transporter.sendMail(newEmail, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log("Email sent: " + info.response);
+                }
+            });
+            console.log("Email sent")
+            res.status(200).json(user);
+        }
+        if (!user) res.status(404).json({ msg: "This email is not registered" })
+    }
+    catch {
+        res.status(500).json({ msg: "Error" })
+    }
+}
+
 module.exports = {
     getUser,
     updateUser,
@@ -141,5 +202,7 @@ module.exports = {
     login,
     verifyToken,
     forgotPasswordEmail,
-    sendContactEmail
+    sendContactEmail,
+    sendChangePassword,
+    sendChangeEmail,
 }
