@@ -4,19 +4,23 @@ const Schema = mongoose.Schema;
 const opinionSchema = new Schema({
     clientName: {
         type: String,
-        //required: true,
+        required: true,
     },
     clientEmail: {
         type: String,
-        //required: true,
+        required: true,
     },
     shootDate: {
         type: Date,
-        //required: true,
+        required: true,
     },
     testimonial: {
         type: String,
-        //required: true,
+        required: true,
+    },
+    country: {
+        type: String,
+        required: true,
     },
     removedAt: Date
 },
