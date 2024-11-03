@@ -36,11 +36,16 @@ const updateUser = async (req, res) => {
 }
 
 const addUser = async (req, res) => {
+    const { email } = req.body
     try {
+        const userChecked = await userModel.findOne({ email: email }) //busco email en BD
+        if (userChecked) {
+            res.status(500).json({ msg: "This email already exist" })
+        }
+
         const hashedPassword = await bcrypt.hash(req.body.password, 10) //encripto contraseña
         const user = await userModel.create({ ...req.body, password: hashedPassword }) //creo usuario con contraseña encriptada
         if (user) { return res.status(201).json(user) }
-        else return res.status(404).json({ msg: "User not found" })
     } catch (error) {
         res.status(400).json({ msg: "You missed some parameter", error: error.message })
     }
