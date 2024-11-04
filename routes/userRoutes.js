@@ -10,6 +10,6 @@ userRouter.post('/login', login)
 userRouter.post('/forgottenpassword', forgotPasswordEmail)
 userRouter.post('/changepassword', verifyToken, sendChangePassword)
 userRouter.post('/changeemail', verifyToken, sendChangeEmail)
-userRouter.post('/clientcontact', verifyToken, sendContactEmail)
+userRouter.post('/clientcontact', sendContactEmail)
 
 module.exports = { userRouter }
