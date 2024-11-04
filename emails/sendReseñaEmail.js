@@ -76,7 +76,7 @@ module.exports = (clienteNombre) => `
             <p>Espero que este correo te encuentre bien. Quería agradecerte nuevamente por haber elegido nuestros servicios para tu sesión de fotos reciente. Fue un verdadero placer trabajar contigo y capturar esos momentos especiales. </p>
             <p>Para nosotros es muy importante conocer tu opinión y saber si la experiencia cumplió con tus expectativas. Si tienes unos minutos disponibles, te agradeceríamos mucho que nos dejaras una breve reseña sobre tu experiencia. Tu feedback no solo nos ayuda a mejorar, sino que también puede guiar a otros clientes potenciales en su decisión. </p>
             <p>Puedes dejar tu reseña haciendo clic en el siguiente enlace:</p>
-            <a class="btn" href="http://localhost:5173/createtestimonials">Nueva reseña</a>
+            <a class="btn" href="https://www.nanamendozago.com/createtestimonials">Nueva reseña</a>
             <p>Agradecemos de antemano tu tiempo y comentarios. Si tienes alguna pregunta o necesitas algo más de nuestra parte, no dudes en contactarnos. </p>
             <p>¡Esperamos poder trabajar contigo de nuevo en el futuro! </p>
             <p>Saludos cordiales,</p>

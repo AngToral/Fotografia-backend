@@ -76,7 +76,7 @@ module.exports = (userId) => `
             <h1>Have you requested to change your password? 🔐</h1>
             <p>Change it at the following link:</p>
             <br/>
-            <a class="btn" href="http://localhost:5173/changepassword/${userId}">New password!</a>
+            <a class="btn" href="https://www.nanamendozago.com/changepassword/${userId}">New password!</a>
             <br/>
         </div>
     </div>

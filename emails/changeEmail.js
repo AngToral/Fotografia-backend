@@ -76,7 +76,7 @@ module.exports = (userId) => `
             <h1>Have you requested to change your email? 🔐</h1>
             <p>Change it at the following link:</p>
             <br/>
-            <a class="btn" href="http://localhost:5173/changeemail/${userId}">New email!</a>
+            <a class="btn" href="https://www.nanamendozago.com/changeemail/${userId}">New email!</a>
             <br/>
         </div>
     </div>
