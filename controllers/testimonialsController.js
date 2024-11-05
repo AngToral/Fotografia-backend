@@ -3,6 +3,7 @@ const sendReseñaEmail = require("../emails/sendReseñaEmail");
 const sendReviewEmail = require("../emails/sendReviewEmail");
 const { opinionModel } = require("../models/testimonials.model")
 const transporter = require('../transporter');
+const schedule = require('node-schedule');
 
 const getOpinion = async (req, res) => {
     try {
@@ -118,6 +119,20 @@ const sendReseñaPeticion = async (req, res) => {
         res.status(403).json({ msg: "Error, forbidden" })
     }
 }
+
+async function backendBot(req, res) {
+    try {
+        const response = await fetch('https://mariana-backend.onrender.com/testimonials')
+        const data = await response.json();
+        console.log('El bot está fucionando cada 7 min');
+    } catch (error) {
+        console.log('Error: ', error);
+    }
+}
+
+schedule.scheduleJob('*/7 * * * *', async () => { //esto mueve el bot cada 7 min
+    await backendBot();
+});
 
 module.exports = {
     getOpinion,
