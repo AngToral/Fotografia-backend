@@ -123,7 +123,7 @@ const sendContactEmail = async (req, res) => {
 
         const forgottenEmail = {
             from: "angtoral.dev@gmail.com",
-            to: "nanamendozago@gmail.com", //cambiar al de mariana
+            to: "hello@nanamendozago.com", //cambiar al de mariana
             subject: "New client contact! 🎉 ",
             html: sendingEmail,
         };

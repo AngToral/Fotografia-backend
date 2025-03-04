@@ -41,7 +41,7 @@ const addOpinion = async (req, res) => {
         const sendingEmail = reviewEmail(clientName, clientEmail, shootDate, testimonial, opinion._id)
         const opinionEmail = {
             from: "angtoral.dev@gmail.com",
-            to: "nanamendozago@gmail.com", //cambiar al de mariana
+            to: "hello@nanamendozago.com", //cambiar al de mariana
             subject: "New client review! 🔥",
             html: sendingEmail,
         };
