@@ -22,9 +22,13 @@ const transporter = nodemailer.createTransport({
     // }
 });
 
-// antes de enviar
+// Antes de enviar, valida la conexión y autenticación
 transporter.verify((err, ok) => {
-    console.log('verify:', err || ok);
+    if (err) {
+        console.error('SMTP verify error:', err);
+    } else {
+        console.log('SMTP server is ready:', ok);
+    }
 });
 
 module.exports = transporter;
