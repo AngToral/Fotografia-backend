@@ -105,20 +105,26 @@ const sendReseñaPeticion = async (req, res) => {
             subject: "¡Hola, hola! 😊",
             html: sendingEmail,
         };
-        transporter.sendMail(reviewEmail, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("Email sent: " + info.response);
-            }
-        });
-        console.log("Email sent")
-        res.status(200).json("Ok");
+
+        // Verifica sesión SMTP (opcional si ya lo haces al arrancar)
+        await transporter.verify();
+
+        const info = await transporter.sendMail(reviewEmail);
+
+        console.log('SMTP response:', info.response, 'messageId:', info.messageId);
+
+        // Valida aceptación del servidor
+        if (!info.response || !info.response.startsWith('250')) {
+            return res.status(502).json({ msg: 'SMTP no aceptó el mensaje' });
+        }
+
+        return res.status(200).json({ msg: 'OK', id: info.messageId });
+
+    } catch (err) {
+        console.error('SMTP send error:', err);
+        return res.status(500).json({ msg: 'Error enviando correo' });
     }
-    catch {
-        res.status(403).json({ msg: "Error, forbidden" })
-    }
-}
+};
 
 async function backendBot(req, res) {
     try {
