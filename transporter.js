@@ -14,11 +14,17 @@ const transporter = nodemailer.createTransport({
     logger: true,
     debug: true,
     tls: {
-        minVersion: 'TLSv1.2'
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: true
     }
     // tls: {
     //     rejectUnauthorized: false
     // }
+});
+
+// antes de enviar
+transporter.verify((err, ok) => {
+    console.log('verify:', err || ok);
 });
 
 module.exports = transporter;
