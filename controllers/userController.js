@@ -117,10 +117,11 @@ const sendContactEmail = async (req, res) => {
         const sendingEmail = contactEmail(clientName, clientEmail, subject)
 
         const email = new SendSmtpEmail();
-        email.subject = 'New Client contact! ✉️';
+        email.subject = 'New Client contact! 🔥';
         email.htmlContent = sendingEmail;
         email.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' };
-        email.to = [{ email: 'hello@nanamendozago.com' }]; // receptor interno
+        email.to = [{ email: 'hello@nanamendozago.com' }];
+        email.replyTo = { email: clientEmail, name: clientName };
 
         console.log('[BREVO] sender:', email.sender.email, 'to:', email.to.map(t => t.email));
 
