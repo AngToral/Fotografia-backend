@@ -12,8 +12,6 @@ const transporter = nodemailer.createTransport({
     connectionTimeout: 15000,
     greetingTimeout: 15000,
     socketTimeout: 30000,
-    logger: true,
-    debug: true,
     tls: {
         minVersion: 'TLSv1.2',
         rejectUnauthorized: true

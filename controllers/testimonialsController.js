@@ -2,7 +2,8 @@ const reviewEmail = require("../emails/reviewEmail");
 const sendReseñaEmail = require("../emails/sendReseñaEmail");
 const sendReviewEmail = require("../emails/sendReviewEmail");
 const { opinionModel } = require("../models/testimonials.model")
-const transporter = require('../transporter');
+//const transporter = require('../transporter');
+const { brevo, SendSmtpEmail } = require('../brevo');
 const schedule = require('node-schedule');
 
 const getOpinion = async (req, res) => {
@@ -39,24 +40,20 @@ const addOpinion = async (req, res) => {
     try {
         const opinion = await opinionModel.create({ ...req.body })
         const sendingEmail = reviewEmail(clientName, clientEmail, shootDate, testimonial, opinion._id)
-        const opinionEmail = {
-            from: "angtoral.dev@gmail.com",
-            to: "hello@nanamendozago.com", //cambiar al de mariana
-            subject: "New client review! 🔥",
-            html: sendingEmail,
-        };
-        transporter.sendMail(opinionEmail, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("Email sent: " + info.response);
-            }
-        });
-        res.status(201).json(opinion)
+        const email = new SendSmtpEmail();
+        email.subject = 'New Client review! 🔥';
+        email.htmlContent = sendingEmail;
+        email.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' };
+        email.to = [{ email: 'hello@nanamendozago.com' }]; // destino interno (cámbialo si procede)
+        // email.replyTo = { email: 'hola@nanamendozago.com' }; // opcional
+
+        const resp = await brevo.sendTransacEmail(email);
+        return res.status(201).json({ ok: true, opinion, id: resp.body.messageId || null, resp: resp.body });
     } catch (error) {
-        res.status(400).json({ msg: "You missed some parameter", error: error.message })
+        console.error('BREVO addOpinion error:', error?.response?.body || error?.body || error);
+        return res.status(400).json({ ok: false, msg: 'You missed some parameter', error: error?.response?.body || error?.body || String(error) });
     }
-}
+};
 
 const deleteOpinion = async (req, res) => {
     try {
@@ -73,58 +70,39 @@ const sendReviewRequest = async (req, res) => {
     try {
         const sendingEmail = sendReviewEmail(clientName)
 
-        const reviewEmail = {
-            from: "angtoral.dev@gmail.com",
-            to: clientEmail,
-            subject: "Hello, there! 😊",
-            html: sendingEmail,
-        };
-        transporter.sendMail(reviewEmail, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("Email sent: " + info.response);
-            }
-        });
-        console.log("Email sent")
-        res.status(200).json("Ok");
+        const email = new SendSmtpEmail();
+        email.subject = 'Hello, there! 😊';
+        email.htmlContent = sendingEmail;
+        email.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' }; // remitente verificado
+        email.to = [{ email: clientEmail }];
+
+        const resp = await brevo.sendTransacEmail(email);
+        return res.status(200).json({ ok: true, id: resp.body.messageId || null, resp: resp.body });
+    } catch (err) {
+        console.error('BREVO sendReviewRequest error:', err?.response?.body || err?.body || err);
+        return res.status(502).json({ ok: false, error: err?.response?.body || err?.body || String(err) });
     }
-    catch {
-        res.status(500).json({ msg: "Error" })
-    }
-}
+};
 
 const sendReseñaPeticion = async (req, res) => {
     const { clienteEmail, clienteNombre } = req.body
     try {
-        const sendingEmail = sendReseñaEmail(clienteNombre)
+        const sendingEmail = sendReseñaEmail(clienteNombre);
 
-        const reviewEmail = {
-            from: "angtoral.dev@gmail.com",
-            to: clienteEmail,
-            subject: "¡Hola, hola! 😊",
-            html: sendingEmail,
-        };
+        const email = new SendSmtpEmail();
+        email.subject = '¡Hola, hola! 😊';
+        email.htmlContent = sendingEmail;
+        email.sender = { name: 'Mariana Mendonza', email: 'hello@nanamendozago.com' };
+        email.to = [{ email: clienteEmail }];
 
-        // Verifica sesión SMTP (opcional si ya lo haces al arrancar)
-        await transporter.verify();
-
-        const info = await transporter.sendMail(reviewEmail);
-
-        console.log('SMTP response:', info.response, 'messageId:', info.messageId);
-
-        // Valida aceptación del servidor
-        if (!info.response || !info.response.startsWith('250')) {
-            return res.status(502).json({ msg: 'SMTP no aceptó el mensaje' });
-        }
-
-        return res.status(200).json({ msg: 'OK', id: info.messageId });
-
+        const resp = await brevo.sendTransacEmail(email);
+        // resp.body contiene messageId y estado
+        return res.status(200).json({ ok: true, id: resp.body.messageId || null, resp: resp.body });
     } catch (err) {
-        console.error('SMTP send error:', err);
-        return res.status(500).json({ msg: 'Error enviando correo' });
+        console.error('BREVO ERROR:', err?.response?.body || err?.body || err);
+        return res.status(502).json({ ok: false, error: err?.response?.body || err?.body || String(err) });
     }
-};
+}
 
 async function backendBot(req, res) {
     try {
