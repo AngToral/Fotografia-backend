@@ -28,6 +28,7 @@ app.use('/testimonials', testimonialsRouter)
 const server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
     console.log("El usuario de la base de datos es: ", process.env.DB_USER)
+    console.log('BREVO_API_KEY length:', process.env.BREVO_API_KEY?.length || 0);
 });
 
 module.exports = { app, server };

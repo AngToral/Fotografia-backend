@@ -2,7 +2,6 @@ const reviewEmail = require("../emails/reviewEmail");
 const sendReseñaEmail = require("../emails/sendReseñaEmail");
 const sendReviewEmail = require("../emails/sendReviewEmail");
 const { opinionModel } = require("../models/testimonials.model")
-//const transporter = require('../transporter');
 const { brevo, SendSmtpEmail } = require('../brevo');
 const schedule = require('node-schedule');
 
@@ -94,6 +93,8 @@ const sendReseñaPeticion = async (req, res) => {
         email.htmlContent = sendingEmail;
         email.sender = { name: 'Mariana Mendonza', email: 'hello@nanamendozago.com' };
         email.to = [{ email: clienteEmail }];
+
+        console.log('[BREVO] sender:', email.sender?.email, 'to:', email.to?.map(t => t.email));
 
         const resp = await brevo.sendTransacEmail(email);
         // resp.body contiene messageId y estado

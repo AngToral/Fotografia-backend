@@ -1,7 +1,7 @@
 const { userModel } = require("../models/user.model")
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const transporter = require('../transporter');
+const { brevo, SendSmtpEmail } = require('../brevo');
 const forgotEmail = require("../emails/forgotEmail");
 const contactEmail = require("../emails/contactEmail");
 const changePassword = require("../emails/changePassword");
@@ -90,115 +90,95 @@ const verifyToken = async (req, res, next) => { //middleware que verifica token 
 const forgotPasswordEmail = async (req, res) => {
     const { email } = req.body
     try {
-        const user = await userModel.findOne({ email: email })
-        const sendingEmail = forgotEmail(user._id)
-        if (user) {
-            const forgottenEmail = {
-                from: "angtoral.dev@gmail.com",
-                to: email,
-                subject: "Reset password 🔑",
-                html: sendingEmail,
-            };
-            transporter.sendMail(forgottenEmail, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log("Email sent: " + info.response);
-                }
-            });
-            console.log("Email sent")
-            res.status(200).json(user);
-        }
-        if (!user) res.status(404).json({ msg: "This email is not registered" })
+        const user = await userModel.findOne({ email });
+        if (!user) return res.status(404).json({ msg: 'This email is not registered' });
+
+        const sendingEmail = forgotEmail(user._id);
+
+        const mail = new SendSmtpEmail();
+        mail.subject = 'Reset password 🔐';
+        mail.htmlContent = sendingEmail;
+        mail.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' };
+        mail.to = [{ email }];
+
+        console.log('[BREVO] sender:', mail.sender.email, 'to:', mail.to.map(t => t.email));
+
+        const resp = await brevo.sendTransacEmail(mail);
+        return res.status(200).json({ ok: true, id: resp.body.messageId || null, resp: resp.body });
+    } catch (error) {
+        console.error('BREVO forgotPasswordEmail:', error?.response?.body || error?.body || error);
+        return res.status(500).json({ ok: false, error: error?.response?.body || error?.body || String(error) });
     }
-    catch {
-        res.status(500).json({ msg: "Error" })
-    }
-}
+};
 
 const sendContactEmail = async (req, res) => {
     const { clientName, clientEmail, subject } = req.body
     try {
         const sendingEmail = contactEmail(clientName, clientEmail, subject)
 
-        const forgottenEmail = {
-            from: "angtoral.dev@gmail.com",
-            to: "hello@nanamendozago.com", //cambiar al de mariana
-            subject: "New client contact! 🎉 ",
-            html: sendingEmail,
-        };
-        transporter.sendMail(forgottenEmail, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("Email sent: " + info.response);
-            }
-        });
-        console.log("Email sent")
-        res.status(200).json("Ok");
+        const email = new SendSmtpEmail();
+        email.subject = 'New Client contact! ✉️';
+        email.htmlContent = sendingEmail;
+        email.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' };
+        email.to = [{ email: 'hello@nanamendozago.com' }]; // receptor interno
+
+        console.log('[BREVO] sender:', email.sender.email, 'to:', email.to.map(t => t.email));
+
+        const resp = await brevo.sendTransacEmail(email);
+        return res.status(200).json({ ok: true, id: resp.body.messageId || null, resp: resp.body });
+    } catch (err) {
+        console.error('BREVO sendContactEmail:', err?.response?.body || err?.body || err);
+        return res.status(502).json({ ok: false, error: err?.response?.body || err?.body || String(err) });
     }
-    catch {
-        res.status(500).json({ msg: "Error" })
-    }
-}
+};
 
 const sendChangePassword = async (req, res) => {
     const { email } = req.body
     try {
-        const user = await userModel.findOne({ email: email })
-        const sendingEmail = changePassword(user._id)
-        if (user) {
-            const newEmail = {
-                from: "angtoral.dev@gmail.com",
-                to: email,
-                subject: "Change your password 🔑",
-                html: sendingEmail,
-            };
-            transporter.sendMail(newEmail, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log("Email sent: " + info.response);
-                }
-            });
-            console.log("Email sent")
-            res.status(200).json(user);
-        }
-        if (!user) res.status(404).json({ msg: "This email is not registered" })
+        const user = await userModel.findOne({ email });
+        if (!user) return res.status(404).json({ msg: 'This email is not registered' });
+
+        const sendingEmail = changeEmail(user._id);
+
+        const mail = new SendSmtpEmail();
+        mail.subject = 'Change your Email 🔑';
+        mail.htmlContent = sendingEmail;
+        mail.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' };
+        mail.to = [{ email }];
+
+        console.log('[BREVO] sender:', mail.sender.email, 'to:', mail.to.map(t => t.email));
+
+        const resp = await brevo.sendTransacEmail(mail);
+        return res.status(200).json({ ok: true, id: resp.body.messageId || null, resp: resp.body });
+    } catch (error) {
+        console.error('BREVO sendChangeEmail:', error?.response?.body || error?.body || error);
+        return res.status(500).json({ ok: false, error: error?.response?.body || error?.body || String(error) });
     }
-    catch {
-        res.status(500).json({ msg: "Error" })
-    }
-}
+};
 
 const sendChangeEmail = async (req, res) => {
     const { email } = req.body
     try {
-        const user = await userModel.findOne({ email: email })
-        const sendingEmail = changeEmail(user._id)
-        if (user) {
-            const newEmail = {
-                from: "angtoral.dev@gmail.com",
-                to: email,
-                subject: "Change your Email 🔑",
-                html: sendingEmail,
-            };
-            transporter.sendMail(newEmail, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log("Email sent: " + info.response);
-                }
-            });
-            console.log("Email sent")
-            res.status(200).json(user);
-        }
-        if (!user) res.status(404).json({ msg: "This email is not registered" })
+        const user = await userModel.findOne({ email });
+        if (!user) return res.status(404).json({ msg: 'This email is not registered' });
+
+        const sendingEmail = changePassword(user._id);
+
+        const mail = new SendSmtpEmail();
+        mail.subject = 'Change your password 🔐';
+        mail.htmlContent = sendingEmail;
+        mail.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' };
+        mail.to = [{ email }];
+
+        console.log('[BREVO] sender:', mail.sender.email, 'to:', mail.to.map(t => t.email));
+
+        const resp = await brevo.sendTransacEmail(mail);
+        return res.status(200).json({ ok: true, id: resp.body.messageId || null, resp: resp.body });
+    } catch (error) {
+        console.error('BREVO sendChangePassword:', error?.response?.body || error?.body || error);
+        return res.status(500).json({ ok: false, error: error?.response?.body || error?.body || String(error) });
     }
-    catch {
-        res.status(500).json({ msg: "Error" })
-    }
-}
+};
 
 module.exports = {
     getUser,
