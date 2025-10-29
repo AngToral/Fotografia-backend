@@ -91,7 +91,7 @@ const sendReseñaPeticion = async (req, res) => {
         const email = new SendSmtpEmail();
         email.subject = '¡Hola, hola! 😊';
         email.htmlContent = sendingEmail;
-        email.sender = { name: 'Mariana Mendonza', email: 'hello@nanamendozago.com' };
+        email.sender = { name: 'Mariana Mendoza', email: 'hello@nanamendozago.com' };
         email.to = [{ email: clienteEmail }];
 
         console.log('[BREVO] sender:', email.sender?.email, 'to:', email.to?.map(t => t.email));
