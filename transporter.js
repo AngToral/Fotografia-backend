@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
     //service: "Gmail",
-    host: "smtp.gmail.com",
+    host: "smtp.ionos.es",
     port: 465,
     secure: true,
     auth: {
